@@ -5,11 +5,17 @@ const mongoose = require("mongoose");
 const projectRoute = require("./routes/project.route");
 // variables
 const port = process.env.PORT || 3000;
+const URI = process.env.LOCAL_URI || process.env.MONGO_URI;
 
 // express app
-const app = express();
+const app = new express();
 //middleware
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
 app.use((req, res, next) => {
@@ -20,7 +26,10 @@ app.use((req, res, next) => {
 app.use("/api/projects", projectRoute);
 //Mongoose
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     // listen for request
     app.listen(port, () => {
