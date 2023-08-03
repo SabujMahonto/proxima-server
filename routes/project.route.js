@@ -5,6 +5,7 @@ const {
   getAllProjects,
   getSingleProject,
   deleteProject,
+  updateProject,
 } = require("../controllers/project.controller");
 
 const router = express.Router();
@@ -22,7 +23,5 @@ router.post("/", postProject);
 // Delete a single project
 router.delete("/:id", deleteProject);
 // Update a single project
-router.patch("/:id", (req, res) => {
-  res.json({ message: "Update a single Project" });
-});
+router.patch("/:id", updateProject);
 module.exports = router;
